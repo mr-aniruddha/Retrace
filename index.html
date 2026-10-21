@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retrace — charts in, data out</title>
+<meta name="description" content="Turn any chart image or PDF back into data. Retrace reads the axes, finds every series, rebuilds the chart and gives you an Excel file with a real chart. Free, private, runs in your browser.">
+<meta name="theme-color" content="#FBFBFD">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1' y='1' width='24' height='24' rx='7' fill='%231D1D1F'/%3E%3Cpath d='M6 17 L10 12 L13 14.5 L19.5 7.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='19.5' cy='7.5' r='1.8' fill='%232997FF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/retrace.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav" aria-label="Main">
+    <button class="brand" id="home" aria-label="Retrace home">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="7" fill="#1D1D1F"/><path d="M6 17 L10 12 L13 14.5 L19.5 7.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19.5" cy="7.5" r="1.8" fill="#2997FF"/></svg>
+      Retrace
+    </button>
+    <div class="steps" id="steps" hidden><i></i><i></i><i></i><span id="stepname"></span></div>
+    <div class="nav-links" id="navlinks"><a href="#how">How it works</a><a href="#privacy">Privacy</a><a href="https://github.com/" id="ghlink">GitHub</a></div>
+  </nav>
+</div>
+
+<main class="wrap">
+  <!-- 1. Arrive -->
+  <section class="screen on" id="arrive" aria-labelledby="hero-title">
+    <div class="hero">
+      <p class="eyebrow">Free. Private. Runs in your browser.</p>
+      <h1 id="hero-title">Charts in.<br><span>Data out.</span></h1>
+      <p class="lede">Give Retrace any chart. It reads the axes, finds every series, and hands back the numbers — rebuilt, checked against the original, ready for Excel.</p>
+    </div>
+    <div class="stage" id="stage">
+      <svg class="bgchart" viewBox="0 0 1040 420" preserveAspectRatio="none" aria-hidden="true">
+        <g stroke="#F0F0F3"><line x1="70" y1="70" x2="990" y2="70"/><line x1="70" y1="150" x2="990" y2="150"/><line x1="70" y1="230" x2="990" y2="230"/><line x1="70" y1="310" x2="990" y2="310"/></g>
+        <line x1="70" y1="360" x2="990" y2="360" stroke="#D2D2D7"/>
+        <path class="trace" d="M70 300 L100 285 L120 200 L150 190 L180 150 L200 120 L220 170 L250 230 L280 255 L310 240 L340 260 L370 275 L400 250 L420 300 L440 230 L470 175 L500 205 L530 220 L560 230 L590 250 L620 205 L650 160 L680 95 L700 80 L720 120 L750 180 L780 215 L810 225 L840 250 L870 270 L890 190 L910 230 L940 225 L990 228" fill="none" stroke="#2997FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="trace b" d="M70 350 L130 300 L190 280 L250 255 L310 250 L370 250 L430 225 L480 200 L530 215 L590 210 L650 215 L700 185 L760 200 L820 215 L880 222 L920 240 L960 205 L990 222" fill="none" stroke="#FF9F0A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="tick" cx="70" cy="70" r="5" fill="#0071E3"/><circle class="tick" cx="70" cy="230" r="5" fill="#0071E3"/><circle class="tick" cx="200" cy="360" r="5" fill="#0071E3"/><circle class="tick" cx="680" cy="360" r="5" fill="#0071E3"/>
+      </svg>
+      <div class="drop">
+        <div class="drop-card">
+          <div class="keys" aria-hidden="true"><span class="key" id="modkey">⌘</span><span class="key">V</span></div>
+          <h2>Paste a chart, or drop it here</h2>
+          <p>Screenshots, images and whole PDFs</p>
+          <button class="btn primary" id="choose">Choose a file</button>
+          <input type="file" id="file" accept="image/*,application/pdf" hidden>
+        </div>
+      </div>
+    </div>
+    <div class="samples">
+      <p>Or try one of these</p>
+      <div class="sample-grid" id="samples"></div>
+    </div>
+    <div class="promises" id="privacy">
+      <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Nothing leaves your device</span>
+      <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4L19 6"/></svg>No sign-up, no key, no cost</span>
+      <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 12h4l3-8 6 16 3-8h4"/></svg>Works offline after the first visit</span>
+    </div>
+    <div class="how" id="how">
+      <div><span class="n">1</span><b>It reads</b><p>Tick labels, dates, legends and colours — rotated labels and two-digit years included.</p></div>
+      <div><span class="n">2</span><b>It traces</b><p>Every series is followed pixel by pixel, then rebuilt from the numbers alone so you can see what it got.</p></div>
+      <div><span class="n">3</span><b>It checks</b><p>The rebuild is laid over your image and scored. Anything doubtful is marked, and one tap fixes it.</p></div>
+    </div>
+  </section>
+
+  <!-- 2. Reading -->
+  <section class="screen" id="reading" aria-labelledby="read-title">
+    <div class="read-grid">
+      <div class="read-art">
+        <div class="art-card"><div class="art" id="art"><img class="src" id="artimg" alt="Your chart"><svg class="ov" id="ov" aria-hidden="true"></svg></div></div>
+        <p class="cap">Faded: your image · Bright: what Retrace has read so far</p>
+      </div>
+      <aside class="read-side" aria-live="polite">
+        <h1 id="read-title">Reading your chart</h1>
+        <p class="sub" id="readsub">This takes a few seconds.</p>
+        <ol class="checks" id="checks">
+          <li data-k="text"><span class="ic"></span><div><b>Reading the text</b><small id="c-text">Labels, legend, title</small><div class="bar"><div id="ocrbar"></div></div></div></li>
+          <li data-k="axes"><span class="ic"></span><div><b>Reading the axes</b><small id="c-axes">Scale and units</small></div></li>
+          <li data-k="legend"><span class="ic"></span><div><b>Matching the legend</b><small id="c-legend">Which colour is which</small><div class="chips" id="c-chips"></div></div></li>
+          <li data-k="trace"><span class="ic"></span><div><b>Tracing the series</b><small id="c-trace">Pixel by pixel</small></div></li>
+          <li data-k="check"><span class="ic"></span><div><b>Rebuilding and checking</b><small id="c-check">Against your image</small></div></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 3. Results -->
+  <section class="screen" id="results" aria-labelledby="res-title">
+    <div class="res-head">
+      <div><h1 id="res-title">Rebuilt.</h1><p id="res-sub"></p></div>
+      <div class="acts">
+        <button class="btn primary" id="dl"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download Excel</button>
+      </div>
+    </div>
+    <div class="card compare">
+      <div class="cmp-top">
+        <div class="seg" role="group" aria-label="Comparison view">
+          <button data-v="wipe" aria-pressed="true">Wipe</button><button data-v="side" aria-pressed="false">Side by side</button><button data-v="diff" aria-pressed="false">Differences</button>
+        </div>
+        <p class="hint" id="hint">Rebuilt on the left, your image on the right</p>
+      </div>
+      <div class="view" id="view"></div>
+      <div class="ribbon"><div class="strip" id="ribbon"></div><p id="ribbon-cap">Confidence along the horizontal axis</p></div>
+    </div>
+  </section>
+
+  <!-- 4. PDF -->
+  <section class="screen" id="pdf" aria-labelledby="pdf-title">
+    <div class="res-head">
+      <div><h1 id="pdf-title">Looking for charts…</h1><p id="pdf-sub"></p></div>
+      <div class="acts"><button class="btn primary" id="dlall"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download workbook</button></div>
+    </div>
+    <div class="pdf-grid" id="pdfgrid"></div>
+    <div class="card wb"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="2" width="24" height="24" rx="6" fill="#107C41"/><path d="M9 9l10 10M19 9L9 19" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg><b id="wbname">workbook.xlsx</b><span style="flex:1"></span><div class="tabs" id="wbtabs"></div></div>
+  </section>
+</main>
+
+<div class="wrap"><footer class="foot"><span>Retrace · free and open · runs entirely in your browser</span><span>Charts in. Data out.</span></footer></div>
+<div class="dropveil" id="veil"><div>Drop to retrace</div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="vendor/tesseract/tesseract.min.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/pdfjs/pdf.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
