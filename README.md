@@ -45,3 +45,5 @@ To try it locally, serve the folder with any static server (for example `python3
 ## Licence
 
 MIT. Bundled libraries keep their own licences: Tesseract.js (Apache-2.0), PDF.js (Apache-2.0), JSZip (MIT/GPLv3).
+
+Live at https://mr-aniruddha.github.io/Retrace/
